@@ -6,10 +6,14 @@
 #  of patent rights can be found in the PATENTS file in the same directory.
 
 cmake_minimum_required(VERSION 2.8)
-
+if(NOT MSVC)
 add_compile_options(-std=c++1y)
 add_compile_options(-fPIC)
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/)
+else()
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
+endif()
+
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/)
 
 # When installing Folly & Wangle in a non-default prefix, this will let
 # projects linking against libwangle.so to find libfolly.so automatically.
@@ -19,7 +23,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-find_package(Folly REQUIRED)
+find_package(Folly)
 find_package(Boost REQUIRED COMPONENTS system thread filesystem regex context)
 find_package(OpenSSL REQUIRED)
 find_package(Glog REQUIRED)
