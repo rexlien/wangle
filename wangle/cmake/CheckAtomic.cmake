@@ -74,6 +74,7 @@ endif()
 # This isn't necessary on MSVC, so avoid command-line switch annoyance
 # by only running on GCC-like hosts.
 if(PROXYGEN_COMPILER_IS_GCC_COMPATIBLE)
+    list(APPEND CMAKE_REQUIRED_LIBRARIES "atomic")
   # First check if atomics work without the library.
   check_working_cxx_atomics(HAVE_CXX_ATOMICS_WITHOUT_LIB)
   # If not, check if the library exists, and atomics work with it.
